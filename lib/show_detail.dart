@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'model/viewList.dart';
 
 class ShowDetail extends StatelessWidget {
@@ -19,22 +20,7 @@ class ShowDetail extends StatelessWidget {
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  height: 250,
-                  color: Colors.grey[300],
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.broken_image,
-                    size: 60,
-                    color: Colors.grey,
-                  ),
-                );
-              },
             ),
-
-            const SizedBox(height: 16),
-
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Card(
@@ -49,7 +35,7 @@ class ShowDetail extends StatelessWidget {
                     children: [
                       Text(
                         recipe.imgLable,
-                        style: const TextStyle(
+                        style: GoogleFonts.kanit(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.red,
@@ -58,7 +44,7 @@ class ShowDetail extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text(
                         recipe.detail,
-                        style: const TextStyle(fontSize: 14, height: 1.5),
+                        style: GoogleFonts.kanit(fontSize: 14, height: 1.5),
                       ),
                     ],
                   ),
