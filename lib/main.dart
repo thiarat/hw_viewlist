@@ -1,85 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'model/viewList.dart';
-import 'show_detail.dart';
+import 'package:hw_viewlist/itemDetail.dart';
+import './model/viewList.dart';
 
 void main() {
-  runApp(const ViewListApp());
+  runApp(const sc_Shop());
 }
 
-class ViewListApp extends StatelessWidget {
-  const ViewListApp({super.key});
-
+class sc_Shop extends StatelessWidget {
+  const sc_Shop({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Scooter-CS SHOP',
       theme: ThemeData(
-        textTheme: GoogleFonts.kanitTextTheme(),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 30, 150, 206),
-          foregroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 52, 29, 255),
+          foregroundColor: Color.fromARGB(255, 255, 255, 255),
         ),
       ),
-      home: const MyHomePage(title: 'Scooter-CS SHOP'),
+      home: const MyHomePage(title: 'CS_Scooter'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: ListView.builder(
-        itemCount: ViewList.samples.length,
-        itemBuilder: (context, index) {
-          final item = ViewList.samples[index];
-          return buildProductCard(item, context);
-        },
+      appBar: AppBar(title: Text(widget.title)),
+      body: SafeArea(
+        child: Container(
+          child: ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  print('You tapped on ${ViewList.samples[index].imgLable}');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Itemdetail(samples: ViewList.samples[index]);
+                      },
+                    ),
+                  );
+                },
+                child: buildRecipeCard(ViewList.samples[index]),
+              );
+            },
+            itemCount: ViewList.samples.length,
+          ),
+        ),
       ),
     );
   }
-}
 
-Widget buildProductCard(ViewList recipe, BuildContext context) {
-  return InkWell(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => ShowDetail(recipe: recipe)),
-      );
-    },
-    child: Card(
-      margin: const EdgeInsets.all(10),
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            recipe.imageUrl,
-            width: double.infinity,
-            height: 220,
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
+  Widget buildRecipeCard(ViewList recipe) {
+    return Card(
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            Image(image: AssetImage(recipe.imgUrl)),
+            const SizedBox(height: 10),
+            Text(
               recipe.imgLable,
-              style: GoogleFonts.kanit(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
